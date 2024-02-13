@@ -1,0 +1,44 @@
+{
+  "name": "@hidori/playwright-crawler-core",
+  "version": "0.0.0",
+  "description": "Playwright crawler core",
+  "author": "hidori",
+  "license": "MIT",
+  "keywords": [
+    "crawler",
+    "playwright"
+  ],
+  "homepage": "https://github.com/hidori/node-plywright-crawle-core#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hidori/node-plywright-crawle-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hidori/node-plywright-crawle-core/issues"
+  },
+  "main": "./src/crawler.js",
+  "type": "module",
+  "scripts": {
+    "test": "node ./src/crawler.test.js",
+    "format": "eslint ./src --fix && prettier --write ./src",
+    "version": "git add --all",
+    "postversion": "git push && git push --tags"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard": "^17.1.0",
+    "prettier": "^3.2.5"
+  },
+  "dependencies": {
+    "@hidori/logger": "^0.1.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jest": "^27.8.0",
+    "eslint-plugin-unused-imports": "^3.1.0",
+    "playwright": "^1.41.2",
+    "prettier": "^3.2.5"
+  }
+}
