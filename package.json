@@ -8,13 +8,13 @@
     "crawler",
     "playwright"
   ],
-  "homepage": "https://github.com/hidori/node-plywright-crawle-core#readme",
+  "homepage": "https://github.com/hidori/node-playwright-crawler-core#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hidori/node-plywright-crawle-core.git"
+    "url": "git+https://github.com/hidori/node-playwright-crawler-core.git"
   },
   "bugs": {
-    "url": "https://github.com/hidori/node-plywright-crawle-core/issues"
+    "url": "https://github.com/hidori/node-playwright-crawler-core/issues"
   },
   "main": "./src/crawler.js",
   "type": "module",
