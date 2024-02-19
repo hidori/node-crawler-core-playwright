@@ -1,28 +1,14 @@
 "use strict";
 
-import { Logger } from "@hidori/logger";
 import { chromium } from "playwright";
 
-class JobHost {
-  constructor(key, logger) {
-    this.#key = key;
-    this.#logger = logger;
-  }
-
-  #key;
-  #logger;
-
-  async info(data) {
-    await this.#logger.info(`job/${this.#key} ${data}`);
-  }
-
-  infoSync(data) {
-    this.#logger.infoSync(`job/${this.#key} ${data}`);
-  }
-}
-
 const defaultConfg = {
-  logger: new Logger(),
+  logger: {
+    debugSync: console.log,
+    infoSync: console.log,
+    warnSync: console.log,
+    errorSync: console.log,
+  },
   playwright: {
     channel: "chrome",
     headless: false,
@@ -39,51 +25,60 @@ export class Crawler {
   #jobs;
 
   async run(keys) {
-    await this.#start("crawler", async () => {
+    try {
+      this.infoSync("crawler: START");
+
       for (const key of keys) {
         if (!(key in this.#jobs)) {
-          throw `unknown job '${key}'`;
+          throw `crawler: unknown job '${key}'`;
         }
       }
 
-      for (const key of keys) {
-        await this.#start(`job/${key}`, async () => {
-          await this.runJob(key, this.#jobs[key]);
-        });
+      const browser = await chromium.launch(this.#config.playwright);
+
+      try {
+        const context = await browser.newContext();
+        const page = await context.newPage();
+
+        for (const key of keys) {
+          this.infoSync(`crawler: START ${key}`);
+
+          await this.#jobs[key].run({
+            crawler: this,
+            browser: browser,
+            context: context,
+            page: page,
+          });
+          await page.waitForTimeout(1000);
+
+          this.infoSync(`crawler: END ${key}`);
+        }
+      } finally {
+        browser.close();
       }
-    });
-  }
 
-  async #start(name, func) {
-    this.#config.logger.infoSync(`${name} START`);
-
-    try {
-      await func();
-
-      this.#config.logger.infoSync(`${name} END`);
+      this.infoSync("crawler: END");
     } catch (e) {
-      this.#config.logger.errorSync(
-        `${name} FAILED\n${JSON.stringify(e, Object.getOwnPropertyNames(e))}`,
+      this.errorSync(
+        `crawler: FAILED\n${JSON.stringify(e, Object.getOwnPropertyNames(e))}`,
       );
       throw e;
     }
   }
 
-  async runJob(key, job) {
-    const browser = await chromium.launch(this.#config.playwright);
+  debugSync(text) {
+    this.#config.logger.debugSync(text);
+  }
 
-    try {
-      const context = await browser.newContext();
-      const page = await context.newPage();
+  infoSync(text) {
+    this.#config.logger.infoSync(text);
+  }
 
-      await job.run({
-        host: new JobHost(key, this.#config.logger),
-        browser: browser,
-        context: context,
-        page: page,
-      });
-    } finally {
-      browser.close();
-    }
+  warnSync(text) {
+    this.#config.logger.warnSync(text);
+  }
+
+  errorSync(text) {
+    this.#config.logger.errorSync(text);
   }
 }
