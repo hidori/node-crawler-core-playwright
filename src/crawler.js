@@ -1,14 +1,10 @@
 "use strict";
 
+import { Logger } from "@hidori/logger";
 import { chromium } from "playwright";
 
 const defaultConfg = {
-  logger: {
-    debugSync: console.log,
-    infoSync: console.log,
-    warnSync: console.log,
-    errorSync: console.log,
-  },
+  logger: new Logger(),
   playwright: {
     channel: "chrome",
     headless: false,

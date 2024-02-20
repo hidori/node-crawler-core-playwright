@@ -1,4 +1,4 @@
-import { Crawler } from "./crawler.js";
+import { Crawler } from "../src/crawler.js";
 
 class GoogleCaptureJob {
   async run({ crawler, page }) {

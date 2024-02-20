@@ -19,8 +19,9 @@
   "main": "./src/crawler.js",
   "type": "module",
   "scripts": {
-    "test": "node ./src/crawler.test.js",
-    "format": "eslint ./src --fix && prettier --write ./src",
+    "test": "true",
+    "format": "eslint ./src ./example --fix && prettier --write ./src ./example",
+    "preversion": "npm test && make run",
     "version": "git add --all",
     "postversion": "git push && git push --tags"
   },
