@@ -32,7 +32,7 @@
     "prettier": "^3.2.5"
   },
   "dependencies": {
-    "@hidori/logger": "^0.1.0",
+    "@hidori/logger": "^0.1.1",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^17.1.0",
