@@ -21,7 +21,7 @@
   "scripts": {
     "test": "true",
     "format": "eslint ./src ./example --fix && prettier --write ./src ./example",
-    "preversion": "npm test && make run",
+    "preversion": "npm run format && npm test && make example/run",
     "version": "git add --all",
     "postversion": "git push && git push --tags"
   },
