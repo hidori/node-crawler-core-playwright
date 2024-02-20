@@ -1,6 +1,6 @@
 {
   "name": "@hidori/playwright-crawler-core",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Playwright crawler core",
   "author": "hidori",
   "license": "MIT",
