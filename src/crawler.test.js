@@ -1,12 +1,12 @@
 import { Crawler } from "./crawler.js";
 
-class CaptureJob {
+class GoogleCaptureJob {
   async run({ crawler, page }) {
     await page.goto("https://www.google.com");
-    crawler.infoSync("job/goolge navigated");
+    crawler.infoSync("google/capture: navigated");
 
     await page.screenshot({ path: "screenshot.png", fullPage: true });
-    crawler.infoSync("job/google captured");
+    crawler.infoSync("google/capture: captured");
 
     await page.waitForTimeout(5000);
   }
@@ -20,7 +20,7 @@ const config = {
 };
 
 const jobs = {
-  capture: new CaptureJob(),
+  "google/capture": new GoogleCaptureJob(),
 };
 
-new Crawler(config, jobs).run(["capture"]);
+new Crawler(config, jobs).run(["google/capture"]);
